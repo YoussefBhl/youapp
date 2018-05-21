@@ -1,0 +1,68 @@
+/*full screen background */
+body, html {
+    height: 100%;
+}
+body {
+    height: 100%; 
+ }
+
+hr {
+    border-color: black;
+}
+
+.btnLogout{
+    width: 70%;
+}
+.btnUser{
+    background: #272727;
+}
+ p {
+     color: black;
+ }
+
+
+.play {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+}
+
+.play img {
+    width: 100%;
+    height: auto;
+}
+.usernameChat{
+    background:gray;
+    display: inline;
+}
+
+#chatMessages{
+    overflow:auto;
+    float:right;
+    height:390px;
+    margin-left: 20;
+    width: -webkit-fill-available;
+}
+.play .playIcon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #555;
+    color: white;
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.play .playIcon:hover {
+    background-color: black;
+}
+/*COPY RIGHT AND DATE*/
+#dateRight{
+    float: right;
+}

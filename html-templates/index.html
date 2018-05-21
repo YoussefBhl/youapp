@@ -1,0 +1,167 @@
+<html lang="en">
+
+<head>
+  <meta name="google-signin-scope" content="profile email">
+  <title>youApp</title>
+  <!-- Plotly.js -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="assets/js/index.js"></script>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+  <!-- +++++++++++++NAV BAR+++++++++++++++++++ -->
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+         <!-- +++++++++++++USER+++++++++++++++++++ -->
+        <div class="dropdown">
+          <button class="btn btnUser" type="button" data-toggle="dropdown">
+            <img src={{user.img}} class="img-circle dropdown-toggle">
+          </button>
+          <ul class="dropdown-menu">
+            <form action="logout">
+              <button class="btn btn-danger btnLogout" type="submit">Logout</button>
+            </form>
+          </ul>
+        </div>
+ <!-- +++++++++++++SEARCH+++++++++++++++++++ -->
+      </div>
+      <form class="navbar-form navbar-left" action="search">
+        <div class="input-group">
+          <input type="text" class="form-control" value="{{qSearch}}" placeholder="Search" name="search">
+          <div class="input-group-btn">
+            <button class="btn btn-default" type="submit">
+              <i class="glyphicon glyphicon-search"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </nav>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog" style="width:auto">
+      <!-- Modal content-->
+      <div class="modal-content" style="width:100%">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" onclick="stopVideo()">&times;</button>
+          <p class="modal-title" id="modalHeader"></p>
+        </div>
+        <div class="modal-body" style="height:470;">
+          <div>
+            <button type="button" class="btn btn-default" onclick="statistics()"> 
+              <h5 id="btnStat">Show statistics</h5></button>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8" id="player" style="float:left;"></div>
+              <div class="col-lg-4" id="modelBodyRigth">
+                <form class="navbar-form navbar-right" id="searchUser">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="username" id="username">
+                    <div class="input-group-btn">
+                      <a class="btn btn-default" onclick="filterUsername()">
+                        <i class="glyphicon glyphicon-search"></i>
+                      </a>
+                    </div>
+                    <div class="input-group-btn">
+                      <a class="btn btn-default" onclick="refreshMessage()">
+                        <i class="glyphicon glyphicon-refresh"></i>
+                      </a>
+                    </div>
+                  </div>
+                </form>
+                <br>
+                <div id="plot" style="display:none;"></div>
+                <div id="chatMessages"></div>
+            </div>
+            <br>
+          </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="stopVideo()">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div>
+
+   <!-- +++++++++++++CENTER OF THE PAGE WHERE THE VIDEOS EXISTS+++++++++++++++++++ -->
+  <div class="container">
+    <div class="row">
+      {% for video in video_list['items'] %} {% if loop.index is divisibleby 3%}
+      <div class="row">
+        {% endif %}
+        <div class="col-lg-4">
+          <div class="thumbnail">
+            <a target="_blank" onclick="joinStream('{{video['id']['videoId']}}', 
+                                    '{{video['snippet']['title']}}')">
+              <div class="play">
+                <img src={{video[ 'snippet'][ 'thumbnails'][ 'medium'][ 'url']}} style="width:100%;position: relative;">
+                <span class="glyphicon glyphicon-play playIcon"></span>
+              </div>
+              <div class="caption">
+                <p>{{video['snippet']['title']}}</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        {% if loop.index is divisibleby 3%}
+      </div>
+      {% endif %} {% endfor %}
+    </div>
+     <!-- +++++++++++++NEXT & PREV PAGE +++++++++++++++++++ -->
+    <div class="row">
+      <form class="navbar-form navbar-left" action="toPage">
+        <input type="hidden" name="q" value="{{qSearch}}" />
+        <input type="hidden" name="page" id="page" value="" />
+        <div class="col-lg-4">
+          {%if video_list['prevPageToken']%}
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-default" onclick="toPage('{{video_list['prevPageToken']}}')">
+              Previous</button>
+          </div>
+          {%endif%}
+        </div>
+        <div class="col-lg-offset-11 col-lg-1">
+          {%if video_list['nextPageToken'] %}
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-default" onclick="toPage('{{video_list['nextPageToken']}}')">
+              Next </button>
+          </div>
+          {%endif%}
+        </div>
+      </form>
+    </div>
+  </div>
+
+ <!-- +++++++++++++FOOOTER+++++++++++++++++++ -->
+
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-lg-6">
+        <p>Copyright &copy; Youapp</p>
+      </div>
+      <div class="col-lg-6">
+        <p id="dateRight">2018-2019</p>
+      </div>
+    </div>
+  </footer>
+  <script>
+
+  </script>
+</body>
+
+</html>
